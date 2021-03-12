@@ -1,31 +1,39 @@
 <?php
 
-include_once 'product.php';
+include_once 'data.php';
 
 class ApiProduct
 {
 
-    function getProducts($category)
+    function getProducts($category, $orderby, $order, $page)
     {
 
         $product = new Data();
         $products = array();
         $products["items"] = array();
+        $products["paginas"] = array();
 
-        $res = $product->getProductByCategory($category);
+        $res = $product->getProductByCategory($category, $orderby, $order, $page);
+        $res2 = $product->getPagesByCategory($category);
 
         if ($res->rowCount()) {
             while ($row = $res->fetch(PDO::FETCH_ASSOC)) {
                 $item = array(
-                    "id" => $row['id'],
+                    "id" => intval($row['id']),
                     "name" => $row['name'],
                     "url_image" => $row['url_image'],
-                    "price" => $row['price'],
-                    "discount" => $row['discount'],
-                    "category" => $row['category'],
+                    "price" => floatval($row['price']),
+                    "discount" => intval($row['discount']),
+                    "category" => intval($row['category']),
                 );
                 array_push($products["items"], $item);
             }
+            $row = $res2->fetch();
+            $item2 = array(
+                "cantidad" => intval($row['cantidad']),
+            );
+            array_push($products["paginas"], $item2);
+
             echo json_encode($products);
         } else {
             echo json_encode(array('mensaje' => 'No hay elementos que mostrar'));
@@ -44,7 +52,7 @@ class ApiProduct
         if ($res->rowCount()) {
             while ($row = $res->fetch(PDO::FETCH_ASSOC)) {
                 $item = array(
-                    "id" => $row['id'],
+                    "id" => intval($row['id']),
                     "name" => $row['name'],
                 );
                 array_push($categories["categories"], $item);
