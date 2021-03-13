@@ -27,7 +27,7 @@ class ApiProduct
             }
             echo json_encode($response);
         } else {
-            echo json_encode(array('mensaje' => 'No hay elementos que mostrar'));
+            echo json_encode(array('mensaje' => null));
         }
     }
 
