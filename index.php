@@ -10,9 +10,9 @@
     <title>Bsale-Test | MF</title>
     <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/dashboard/">
     <!-- Bootstrap core CSS -->
-    <link href="assets/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="page/assets/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
-    <link href="assets/css/dashboard.css" rel="stylesheet">
+    <link href="page/assets/css/dashboard.css" rel="stylesheet">
 </head>
 
 <body>
@@ -49,7 +49,7 @@
     <script src="assets/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
-    <script src="assets/js/main.js"></script>
+    <script src="page/assets/js/main.js"></script>
 </body>
 
 </html>
