@@ -25,7 +25,7 @@ function loadCard() {
     $.ajax({
         type: 'GET',
         dataType: 'json',
-        url: 'https://api-bsale-test-mf.herokuapp.com/?category=3&orderby=4&order=2&page=1',
+        url: './API/index.php?category=3&orderby=4&order=2&page=1',
     }).done(function (res) {
         res.items.forEach(e => {
             console.log(e);
