@@ -3,6 +3,11 @@ include_once 'api.php';
 
 $api = new ApiProduct();
 
+if (isset($_GET['search'])) {
+    $name = $_GET['search'];
+    $api->getProductBySearch($name);
+}
+
 if (isset($_GET['category'], $_GET['orderby'], $_GET['order'], $_GET['page'])) {
     $category = $_GET['category'];
     $orderby = $_GET['orderby'];

@@ -4,6 +4,17 @@ include_once 'db.php';
 
 class Data extends DB
 {
+    function getProductBySearch($name)
+    {
+        $query = $this->connect()->prepare(
+            "SELECT * FROM product 
+            WHERE name LIKE '%' :name '%'
+            ORDER BY name"
+        );
+        $query->bindParam(':name',$name, PDO::PARAM_STR);
+        $query->execute();
+        return $query;
+    }
 
     function getCategories()
     {
@@ -31,7 +42,7 @@ class Data extends DB
 
     function getPagesByCategory($category){
         $query = $this->connect()->prepare(
-            "SELECT CEIL(COUNT(id)/6) 'cantidad' FROM product
+            "SELECT CEIL(COUNT(id)/6) 'number' FROM product
             WHERE category = :category"
         );
         $query->bindParam(':category', $category, PDO::PARAM_INT);
