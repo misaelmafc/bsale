@@ -27,7 +27,7 @@ class ApiProduct
             }
             echo json_encode($response);
         } else {
-            echo json_encode(array('mensaje' => null));
+            echo json_encode(null);
         }
     }
 
@@ -62,7 +62,7 @@ class ApiProduct
 
             echo json_encode($response);
         } else {
-            echo json_encode(array('mensaje' => null));
+            echo json_encode(null);
         }
     }
 
@@ -85,7 +85,7 @@ class ApiProduct
             }
             echo json_encode($response);
         } else {
-            echo json_encode(array('mensaje' => null));
+            echo json_encode(null);
         }
     }
 }
