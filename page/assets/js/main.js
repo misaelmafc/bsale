@@ -1,7 +1,20 @@
+$(document).ready(function () {
+    $('#main').html(`
+    <div class="row justify-content-center divMessageInitial">
+    <div class="col-lg-7">
+        <h3 class="titleInitial">Puedes buscar nuestros productos por catergoría o en el buscador</h3>
+    </div>
+    <div class="col-12 col-md-10">
+        <img class="imgMessage" src="PAGE/assets/img/search-data.svg" alt="">
+    </div>
+</div>
+    `);
+});
+
 window.addEventListener("load", loadNav);
 
 $('#search').keyup(function () {
-    $('.linkActive').removeClass('active');
+    $('.linkActive').removeClass('linkActive');
     let wordBySearch = $(this).val();
     if (wordBySearch != '') {
         getProductFromSearch(wordBySearch);
@@ -32,9 +45,9 @@ function loadNav() {
             `);
 
             $(`#navId${e.id}`).click(function (event) {
-                $('.linkActive').removeClass('active');
+                $('.linkActive').removeClass('linkActive');
                 getProductFromCategory(e.id);
-                $(this).addClass('active linkActive');
+                $(this).addClass('linkActive');
                 event.preventDefault();
             });
         });
@@ -56,25 +69,23 @@ function getProductFromApi(switcher, url, category, page, orderbyGlobal, orderGl
         url: url,
         beforeSend: function () {
             $('#main').html(`
-          <div class="spinner-grow" role="status">
-             <span class="sr-only">Cargando...</span>
-          </div>
-          `);
+            <div id="spinnerLoad" class="spinner-grow" role="status">
+                <span class="sr-only">Cargando...</span>
+            </div>
+            `);
         }
     }).done(function (res) {
         if (res != null) {
             $('#main').empty();
 
-
             if (orderbyGlobal == 4 && orderGlobal == 1) { btnOrderByText = 'Precio menor a mayor' }
             else if (orderbyGlobal == 4 && orderGlobal == 2) { btnOrderByText = 'Precio mayor a menor' }
-            else if (orderbyGlobal == 2 && orderGlobal == 1) { btnOrderByText = 'Ordenar por' }
+            else if (orderbyGlobal == 2 && orderGlobal == 1) { btnOrderByText = 'Nombre A-Z' }
             else if (orderbyGlobal == 2 && orderGlobal == 2) { btnOrderByText = 'Nombre Z-A' }
-            else if (orderbyGlobal == 5 && orderGlobal == 1) { btnOrderByText = 'Descuento' }
-
+            else if (orderbyGlobal == 5 && orderGlobal == 2) { btnOrderByText = 'Ofertas primero' }
 
             $('#main').append(`
-            <div class="dropdown col-12">
+            <div class="dropdown col-12" style="margin-bottom: 2rem;">
                 <a id="btnOrderBy" class="btn btn-secondary dropdown-toggle" href="" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     ${btnOrderByText}
                 </a>
@@ -83,7 +94,7 @@ function getProductFromApi(switcher, url, category, page, orderbyGlobal, orderGl
                     <a id="order2" class="dropdown-item" href="">Precio mayor a menor</a>
                     <a id="order3" class="dropdown-item" href="">Nombre A-Z</a>
                     <a id="order4" class="dropdown-item" href="">Nombre Z-A</a>
-                    <a id="order5" class="dropdown-item" href="">Descuento</a>
+                    <a id="order5" class="dropdown-item" href="">Ofertas primero</a>
                 </div>
             </div>
             `);
@@ -92,7 +103,7 @@ function getProductFromApi(switcher, url, category, page, orderbyGlobal, orderGl
                 2: { 'orderby': 4, 'order': 2 },
                 3: { 'orderby': 2, 'order': 1 },
                 4: { 'orderby': 2, 'order': 2 },
-                5: { 'orderby': 5, 'order': 1 },
+                5: { 'orderby': 5, 'order': 2 },
             };
             for (i = 1; i <= Object.keys(optionsOrder).length; i++) {
                 $(`#order${i}`).click(function (event) {
@@ -100,35 +111,70 @@ function getProductFromApi(switcher, url, category, page, orderbyGlobal, orderGl
                     orderby = optionsOrder[j].orderby;
                     order = optionsOrder[j].order;
                     switcher === 1 ? getProductFromCategory(category, 1, orderby, order) : getProductFromSearch(category, 1, orderby, order);
-                    
                     event.preventDefault();
                 });
             }
-
             res.items.forEach(e => {
                 if (e.url_image == null || e.url_image == '') {
                     urlImage = 'page/assets/img/not-found.png';
                 } else {
                     urlImage = e.url_image;
                 }
-                $('#main').append(
-                    `<div class="card col-9 col-md-5 col-lg-3 m-4">
-                        <img src="${urlImage}" style="width: 100%;" alt="${e.name}">
-                        <hr>
-                        <div class="card-body">
-                            <h5 class="card-title">${e.name.toUpperCase()}</h5>
-                            <p class="card-text">$${e.price}</p>
-                            <a href="#" class="btn btn-primary">Agregar</a>
-                        </div>
-                    </div>`
-                );
+                if (e.discount > 0) {
+                    price = ((e.price * e.discount) / 100);
+                    finalPrice = new Intl.NumberFormat('es-CL', { currency: 'CLP', style: 'currency' }).format(parseInt(e.price - price));
+                    finalPriceNormal = new Intl.NumberFormat('es-CL', { currency: 'CLP', style: 'currency' }).format(parseInt(e.price));
+                    $('#main').append(
+                        `<div class="col-12 col-sm-6 col-lg-4 cardProduct">
+                            <div class="row justify-content-center">
+                                <div class="col-11 col-lg-10 cardProductVisible">
+                                    <div class="divCardImg">
+                                        <img class="imgCard" src="${urlImage}" alt="${e.name}">
+                                    </div>
+                                    <hr>
+                                    <div class="cardBody">
+                                        <h6 class="cardTitle">${e.name.toUpperCase()}</h6>
+                                        <h4 class="cardPrice">${finalPrice} Oferta</h4>
+                                        <h6 class="cardPriceNormal">${finalPriceNormal} Normal</h6>
+                                        <div class="divBtnCard">
+                                        <a href="#"><img class="btnCard" src="PAGE/assets/img/add.png"></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`
+                    );
+                } else {
+                    price = new Intl.NumberFormat('es-CL', { currency: 'CLP', style: 'currency' }).format(parseInt(e.price));
+                    $('#main').append(
+                        `<div class="col-12 col-sm-6 col-lg-4 cardProduct">
+                            <div class="row justify-content-center">
+                                <div class="col-11 col-lg-10 cardProductVisible">
+                                    <div class="divCardImg">
+                                        <img class="imgCard" src="${urlImage}" alt="${e.name}">
+                                    </div>
+                                    <hr>
+                                    <div class="cardBody">
+                                        <h6 class="cardTitle">${e.name.toUpperCase()}</h6>
+                                        <h4 class="cardPrice">${price}</h4>
+                                        <h6 class="cardPriceNormal"></h6>
+                                        <div class="divBtnCard">
+                                            <a href="#"><img class="btnCard" src="PAGE/assets/img/add.png"></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`
+                    );
+                }
+
             });
             if (res.paginas != undefined) {
                 res.paginas.forEach(e => {
                     if (e.number > 1) {
                         $('#main').append(`
-                            <div style="margin-top: 3rem;" class="col-12 row justify-content-center">
-                                <nav aria-label="Page navigation example">
+                            <div id="divPagination" class="col-12 row justify-content-center">
+                                <nav>
                                     <ul id="pagination" class="pagination">
                                     </ul>
                                 </nav>
@@ -151,12 +197,12 @@ function getProductFromApi(switcher, url, category, page, orderbyGlobal, orderGl
             }
         } else {
             $('#main').html(`
-          <h1>Error al encontrar los datos 1</h1>
-          `);
+                <img class="imgMessage" src="PAGE/assets/img/no_data.svg">
+            `);
         }
     }).fail(function () {
         $('#main').html(`
-          <h1>Error al encontrar los datos 2</h1>
-       `);
+                <img class="imgMessage" src="PAGE/assets/img/no_data.svg">
+        `);
     });
 }

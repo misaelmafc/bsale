@@ -22,12 +22,16 @@
             data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <input id="search" class="form-control form-control-dark w-75" type="text" placeholder="Buscar" aria-label="Search">
-        <ul class="navbar-nav px-3">
-            <li class="nav-item text-nowrap">
-                <a id="testing" class="nav-link" href="#">Sign out</a>
-            </li>
-        </ul>
+        <div class="row col-lg-10 justify-content-center">
+            <div class="col-offset-1 col-9 col-lg-6 searcher">
+                <input id="search" class="form-control form-control-dark" type="text" placeholder="Buscar" aria-label="Search">
+            </div>
+            <ul class="navbar-nav px-3 col-2 col-lg-2">
+                <li class="nav-item text-nowrap">
+                    <a id="testing" class="nav-link" href="#"><img class="imgCart" src="PAGE/assets/img/shopping-cart.png"></a>
+                </li>
+            </ul>
+        </div>
     </nav>
 
     <div class="container-fluid">
@@ -40,7 +44,9 @@
             </nav>
 
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-                <div id="main" class="row" style="padding: 2rem 0rem 2rem 0rem;">
+                <div class="container">
+                    <div class="row" id="main">
+                    </div>
                 </div>
             </main>
         </div>

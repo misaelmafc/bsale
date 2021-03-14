@@ -103,9 +103,158 @@ body {
 }
 
 /*
-  TARJETAS
+  PERSONALIZADO
 */
+
+.pagination > li > a
+{
+    background-color: white;
+    color: #6c757d;
+}
+
+.pagination > li > a:focus,
+.pagination > li > a:hover,
+.pagination > li > span:focus,
+.pagination > li > span:hover
+{
+    color: #5a5a5a;
+    background-color: #eee;
+    border-color: #ddd;
+}
+
+.pagination > .active > a
+{
+    color: white;
+    background-color: #6c757d !Important;
+    border: solid 1px #6c757d !Important;
+}
+
+.pagination > .active > a:hover
+{
+    background-color: #6c757d !Important;
+    border: solid 1px #6c757d;
+}
+
+
+/**************************************************/
+
+.searcher{
+  text-align: center !important;
+}
+
+.navbar-brand{
+  background-color: #343a40;
+}
+
+.linkActive{
+  color: white !important;
+  background-color: #6c757d;
+}
+
+
+/**************************************************/
+.divMessageInitial{
+  margin-top: 2rem;
+}
+
+.titleInitial{
+  color: #333;
+}
+
+
+.imgMessage{
+  margin-top: 2rem;
+  margin-left: 25%;
+  width: 50%;
+}
 
 .nav-perso{
   margin-top: 1rem;
+}
+
+.imgCart{
+  margin-left: 0.5rem;
+  margin-right: 1.5rem;
+  width: 1.5rem;
+}
+
+.imgCart:hover{
+  filter: opacity(0.8);
+}
+
+#main{
+  margin: 2rem 0rem 1rem 0rem;
+}
+
+.cardProduct{
+  margin-bottom: 3rem;
+}
+
+.cardProductVisible{
+  height: 30rem;
+  border: solid 1px rgb(235, 235, 235);
+  border-radius: 10px;
+  transition: transform 0.3s, box-shadow 0.4s;
+}
+
+.cardProductVisible:hover{
+  box-shadow: -7px 7px 13px #e0e0e0,
+  7px -7px 13px #ffffff;
+}
+
+.divCardImg{
+  text-align: center;
+  margin-top: 1rem;
+  height: 50%;
+}
+
+.imgCard{
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.cardBody{
+  height: 50%;
+}
+
+.cardTitle{
+  height: 20%;
+  color: #9a9a9a;
+}
+
+.cardPrice{
+  color: #ec4d46;
+}
+
+.cardPriceNormal{
+  height: 7.5%;
+  color: #9a9a9a;
+}
+
+.divBtnCard{
+  margin-top: 0.5rem;
+  margin-right: 1rem;
+  text-align: end;
+}
+
+.btnCard{
+  width: 2.5rem;
+}
+
+.btnCard:hover{
+  filter: opacity(0.9);
+}
+
+#divPagination{
+  margin-top: 1rem;
+}
+
+#spinnerLoad{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+}
+
+#search{
+  border-radius: 25px;
 }
