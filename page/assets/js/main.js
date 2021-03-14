@@ -3,14 +3,18 @@ window.addEventListener("load", loadNav);
 $('#search').keyup(function () {
     $('.linkActive').removeClass('active');
     let wordBySearch = $(this).val();
-    let url = `./API/index.php?search=${wordBySearch}`;
     if (wordBySearch != '') {
-        getProductFromApi(url);
+        getProductFromSearch(wordBySearch);
     } else {
         $('#main').empty();
     }
 
 });
+
+function getProductFromSearch(search, page = 1, orderby = 2, order = 1) {
+    let url = `./API/index.php?search=${search}&orderby=${orderby}&order=${order}&page=${page}`;
+    getProductFromApi(2, url, search, page, orderby, order);
+}
 
 function loadNav() {
     $.ajax({
@@ -29,7 +33,7 @@ function loadNav() {
 
             $(`#navId${e.id}`).click(function (event) {
                 $('.linkActive').removeClass('active');
-                componentProduct(e.id);
+                getProductFromCategory(e.id);
                 $(this).addClass('active linkActive');
                 event.preventDefault();
             });
@@ -39,7 +43,13 @@ function loadNav() {
     });
 }
 
-function getProductFromApi(url, category, page, orderbyGlobal, orderGlobal) {
+function getProductFromCategory(category, page = 1, orderby = 2, order = 1) {
+    let url = `./API/index.php?category=${category}&orderby=${orderby}&order=${order}&page=${page}`;
+    $('#search').val('');
+    getProductFromApi(1, url, category, page, orderby, order);
+}
+
+function getProductFromApi(switcher, url, category, page, orderbyGlobal, orderGlobal) {
     $.ajax({
         type: 'GET',
         dataType: 'json',
@@ -89,7 +99,8 @@ function getProductFromApi(url, category, page, orderbyGlobal, orderGlobal) {
                     j = $(this).attr('id').replace('order', '');
                     orderby = optionsOrder[j].orderby;
                     order = optionsOrder[j].order;
-                    componentProduct(category, 1, orderby, order);
+                    switcher === 1 ? getProductFromCategory(category, 1, orderby, order) : getProductFromSearch(category, 1, orderby, order);
+                    
                     event.preventDefault();
                 });
             }
@@ -129,7 +140,7 @@ function getProductFromApi(url, category, page, orderbyGlobal, orderGlobal) {
                             `)
                             $(`#page${i}`).click(function (event) {
                                 page = $(this).attr('id').replace('page', '');
-                                componentProduct(category, page, orderbyGlobal, orderGlobal);
+                                switcher === 1 ? getProductFromCategory(category, page, orderbyGlobal, orderGlobal) : getProductFromSearch(category, page, orderbyGlobal, orderGlobal);
                                 event.preventDefault();
                             });
                         }
@@ -148,10 +159,4 @@ function getProductFromApi(url, category, page, orderbyGlobal, orderGlobal) {
           <h1>Error al encontrar los datos 2</h1>
        `);
     });
-}
-
-function componentProduct(category, page = 1, orderby = 2, order = 1) {
-    let url = `./API/index.php?category=${category}&orderby=${orderby}&order=${order}&page=${page}`;
-    $('#search').val('');
-    getProductFromApi(url, category, page, orderby, order);
 }

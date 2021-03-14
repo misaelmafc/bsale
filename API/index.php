@@ -13,9 +13,19 @@ if($method == "OPTIONS") {
 
 $api = new ApiProduct();
 
-if (isset($_GET['search'])) {
+if (isset($_GET['search'], $_GET['orderby'], $_GET['order'], $_GET['page'])) {
     $name = $_GET['search'];
-    $api->getProductBySearch($name);
+    $orderby = $_GET['orderby'];
+    $order = $_GET['order'];
+    $page = $_GET['page'];
+    if (
+        is_numeric($orderby) &&
+        is_numeric($order) &&
+        ($order == 1 || $order == 2) &&
+        is_numeric($page)
+    ) {
+        $api->getProductBySearch($name, $orderby, $order, $page);
+    }
 }
 
 if (isset($_GET['category'], $_GET['orderby'], $_GET['order'], $_GET['page'])) {

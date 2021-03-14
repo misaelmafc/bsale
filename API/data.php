@@ -10,14 +10,30 @@ class Data extends DB
         return $query;
     }
 
-    function getProductBySearch($name)
+    function getProductBySearch($name, $orderby, $order, $page)
     {
+        if($order == 1){$sort = 'ASC';}
+        if($order == 2){$sort = 'DESC';}
+        $page_ = (($page-1)*6);
         $query = $this->connect()->prepare(
             "SELECT * FROM product 
             WHERE name LIKE '%' :name '%'
-            ORDER BY name"
+            ORDER BY :orderby $sort
+            LIMIT 6 OFFSET :page"
         );
         $query->bindParam(':name',$name, PDO::PARAM_STR);
+        $query->bindParam(':orderby',$orderby, PDO::PARAM_INT);
+        $query->bindParam(':page',$page_, PDO::PARAM_INT);
+        $query->execute();
+        return $query;
+    }
+
+    function getPagesBySearch($name){
+        $query = $this->connect()->prepare(
+            "SELECT CEIL(COUNT(id)/6) 'number' FROM product
+            WHERE name LIKE '%' :name '%'"
+        );
+        $query->bindParam(':name', $name, PDO::PARAM_STR);
         $query->execute();
         return $query;
     }

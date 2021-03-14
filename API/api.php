@@ -4,14 +4,16 @@ include_once 'data.php';
 
 class ApiProduct
 {
-    function getProductBySearch($name)
+    function getProductBySearch($name, $orderby, $order, $page)
     {
 
         $data = new Data();
         $response = array();
         $response["items"] = array();
+        $response["paginas"] = array();
 
-        $res = $data->getProductBySearch($name);
+        $res = $data->getProductBySearch($name, $orderby, $order, $page);
+        $res2 = $data->getPagesBySearch($name);
 
         if ($res->rowCount()) {
             while ($row = $res->fetch(PDO::FETCH_ASSOC)) {
@@ -25,6 +27,12 @@ class ApiProduct
                 );
                 array_push($response["items"], $item);
             }
+            $row = $res2->fetch();
+            $item2 = array(
+                "number" => intval($row['number']),
+            );
+            array_push($response["paginas"], $item2);
+
             echo json_encode($response);
         } else {
             echo json_encode(null);
