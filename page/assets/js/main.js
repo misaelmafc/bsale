@@ -5,7 +5,7 @@ $(document).ready(function () {
         <h3 class="titleInitial">Puedes buscar nuestros productos por catergoría o en el buscador</h3>
     </div>
     <div class="col-12 col-md-10">
-        <img class="imgMessage" src="PAGE/assets/img/search-data.svg" alt="">
+        <img class="imgMessage" src="https://astroparsec.cl/imgHeroku/search-data.svg" alt="">
     </div>
 </div>
     `);
@@ -116,7 +116,7 @@ function getProductFromApi(switcher, url, category, page, orderbyGlobal, orderGl
             }
             res.items.forEach(e => {
                 if (e.url_image == null || e.url_image == '') {
-                    urlImage = 'page/assets/img/not-found.png';
+                    urlImage = 'https://astroparsec.cl/imgHeroku/not-found.png';
                 } else {
                     urlImage = e.url_image;
                 }
@@ -137,7 +137,7 @@ function getProductFromApi(switcher, url, category, page, orderbyGlobal, orderGl
                                         <h4 class="cardPrice">${finalPrice} Oferta</h4>
                                         <h6 class="cardPriceNormal">${finalPriceNormal} Normal</h6>
                                         <div class="divBtnCard">
-                                        <a href="#"><img class="btnCard" src="PAGE/assets/img/add.png"></a>
+                                        <a href="#"><img class="btnCard" src="https://astroparsec.cl/imgHeroku/add.png"></a>
                                         </div>
                                     </div>
                                 </div>
@@ -159,7 +159,7 @@ function getProductFromApi(switcher, url, category, page, orderbyGlobal, orderGl
                                         <h4 class="cardPrice">${price}</h4>
                                         <h6 class="cardPriceNormal"></h6>
                                         <div class="divBtnCard">
-                                            <a href="#"><img class="btnCard" src="PAGE/assets/img/add.png"></a>
+                                            <a href="#"><img class="btnCard" src="https://astroparsec.cl/imgHeroku/add.png"></a>
                                         </div>
                                     </div>
                                 </div>
@@ -197,12 +197,12 @@ function getProductFromApi(switcher, url, category, page, orderbyGlobal, orderGl
             }
         } else {
             $('#main').html(`
-                <img class="imgMessage" src="PAGE/assets/img/no_data.svg">
+                <img class="imgMessage" src="https://astroparsec.cl/imgHeroku/no_data.svg">
             `);
         }
     }).fail(function () {
         $('#main').html(`
-                <img class="imgMessage" src="PAGE/assets/img/no_data.svg">
+                <img class="imgMessage" src="https://astroparsec.cl/imgHeroku/no_data.svg">
         `);
     });
 }

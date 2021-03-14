@@ -28,7 +28,7 @@
             </div>
             <ul class="navbar-nav px-3 col-2 col-lg-2">
                 <li class="nav-item text-nowrap">
-                    <a id="testing" class="nav-link" href="#"><img class="imgCart" src="PAGE/assets/img/shopping-cart.png"></a>
+                    <a id="testing" class="nav-link" href="#"><img class="imgCart" src="https://astroparsec.cl/imgHeroku/shopping-cart.png"></a>
                 </li>
             </ul>
         </div>
