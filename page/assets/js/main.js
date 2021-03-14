@@ -1,13 +1,13 @@
 $(document).ready(function () {
     $('#main').html(`
-    <div class="row justify-content-center divMessageInitial">
-    <div class="col-lg-7">
-        <h3 class="titleInitial">Puedes buscar nuestros productos por catergoría o en el buscador</h3>
-    </div>
-    <div class="col-12 col-md-10">
-        <img class="imgMessage" src="https://astroparsec.cl/imgHeroku/search-data.svg" alt="">
-    </div>
-</div>
+        <div class="row justify-content-center divMessageInitial">
+            <div class="col-lg-7">
+                <h3 class="titleInitial">Puedes buscar nuestros productos por catergoría o en el buscador</h3>
+            </div>
+            <div class="col-12 col-md-10">
+                <img class="imgMessage" src="https://astroparsec.cl/imgHeroku/search-data.svg" alt="">
+            </div>
+        </div>
     `);
 });
 
@@ -19,7 +19,16 @@ $('#search').keyup(function () {
     if (wordBySearch != '') {
         getProductFromSearch(wordBySearch);
     } else {
-        $('#main').empty();
+        $('#main').html(`
+            <div class="row justify-content-center divMessageInitial">
+                <div class="col-lg-7">
+                    <h3 class="titleInitial">Puedes buscar nuestros productos por catergoría o en el buscador</h3>
+                </div>
+                <div class="col-12 col-md-10">
+                    <img class="imgMessage" src="https://astroparsec.cl/imgHeroku/search-data.svg" alt="">
+                </div>
+            </div>
+         `);
     }
 
 });
