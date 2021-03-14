@@ -22,7 +22,7 @@
             data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <input class="form-control form-control-dark w-75" type="text" placeholder="Search" aria-label="Search">
+        <input id="search" class="form-control form-control-dark w-75" type="text" placeholder="Buscar" aria-label="Search">
         <ul class="navbar-nav px-3">
             <li class="nav-item text-nowrap">
                 <a id="testing" class="nav-link" href="#">Sign out</a>
@@ -39,8 +39,9 @@
                 </div>
             </nav>
 
-            <main id="main" role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 row">
-
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+                <div id="main" class="row" style="padding: 2rem 10rem 2rem 10rem;">
+                </div>
             </main>
         </div>
     </div>
@@ -50,8 +51,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
     <script src="page/assets/js/main.js"></script>
-    <script src="page/assets/js/router.js"></script>
-    <script src="page/assets/js/components.js"></script>
 </body>
 
 </html>
