@@ -4,6 +4,12 @@ include_once 'db.php';
 
 class Data extends DB
 {
+    function getCategories()
+    {
+        $query = $this->connect()->query("SELECT * FROM category ORDER BY name");
+        return $query;
+    }
+
     function getProductBySearch($name)
     {
         $query = $this->connect()->prepare(
@@ -13,12 +19,6 @@ class Data extends DB
         );
         $query->bindParam(':name',$name, PDO::PARAM_STR);
         $query->execute();
-        return $query;
-    }
-
-    function getCategories()
-    {
-        $query = $this->connect()->query("SELECT * FROM category");
         return $query;
     }
 

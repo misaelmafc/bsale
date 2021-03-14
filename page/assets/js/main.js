@@ -39,7 +39,7 @@ function loadNav() {
     });
 }
 
-function getProductFromApi(url, category, page) {
+function getProductFromApi(url, category, page, orderbyGlobal, orderGlobal) {
     $.ajax({
         type: 'GET',
         dataType: 'json',
@@ -54,6 +54,46 @@ function getProductFromApi(url, category, page) {
     }).done(function (res) {
         if (res != null) {
             $('#main').empty();
+
+
+            if (orderbyGlobal == 4 && orderGlobal == 1) { btnOrderByText = 'Precio menor a mayor' }
+            else if (orderbyGlobal == 4 && orderGlobal == 2) { btnOrderByText = 'Precio mayor a menor' }
+            else if (orderbyGlobal == 2 && orderGlobal == 1) { btnOrderByText = 'Ordenar por' }
+            else if (orderbyGlobal == 2 && orderGlobal == 2) { btnOrderByText = 'Nombre Z-A' }
+            else if (orderbyGlobal == 5 && orderGlobal == 1) { btnOrderByText = 'Descuento' }
+
+
+            $('#main').append(`
+            <div class="dropdown col-12">
+                <a id="btnOrderBy" class="btn btn-secondary dropdown-toggle" href="" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    ${btnOrderByText}
+                </a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <a id="order1" class="dropdown-item" href="">Precio menor a mayor</a>
+                    <a id="order2" class="dropdown-item" href="">Precio mayor a menor</a>
+                    <a id="order3" class="dropdown-item" href="">Nombre A-Z</a>
+                    <a id="order4" class="dropdown-item" href="">Nombre Z-A</a>
+                    <a id="order5" class="dropdown-item" href="">Descuento</a>
+                </div>
+            </div>
+            `);
+            let optionsOrder = {
+                1: { 'orderby': 4, 'order': 1 },
+                2: { 'orderby': 4, 'order': 2 },
+                3: { 'orderby': 2, 'order': 1 },
+                4: { 'orderby': 2, 'order': 2 },
+                5: { 'orderby': 5, 'order': 1 },
+            };
+            for (i = 1; i <= Object.keys(optionsOrder).length; i++) {
+                $(`#order${i}`).click(function (event) {
+                    j = $(this).attr('id').replace('order', '');
+                    orderby = optionsOrder[j].orderby;
+                    order = optionsOrder[j].order;
+                    componentProduct(category, 1, orderby, order);
+                    event.preventDefault();
+                });
+            }
+
             res.items.forEach(e => {
                 if (e.url_image == null || e.url_image == '') {
                     urlImage = 'page/assets/img/not-found.png';
@@ -83,13 +123,13 @@ function getProductFromApi(url, category, page) {
                                 </nav>
                             </div>
                         `);
-                        for(i = 1; i <= e.number; i++){
+                        for (i = 1; i <= e.number; i++) {
                             $('#pagination').append(`
                                 <li id="li${i}" class="page-item"><a id="page${i}" class="page-link" href="">${i}</a></li>
                             `)
-                            $(`#page${i}`).click(function (event){
+                            $(`#page${i}`).click(function (event) {
                                 page = $(this).attr('id').replace('page', '');
-                                componentProduct(category, page);
+                                componentProduct(category, page, orderbyGlobal, orderGlobal);
                                 event.preventDefault();
                             });
                         }
@@ -113,5 +153,5 @@ function getProductFromApi(url, category, page) {
 function componentProduct(category, page = 1, orderby = 2, order = 1) {
     let url = `./API/index.php?category=${category}&orderby=${orderby}&order=${order}&page=${page}`;
     $('#search').val('');
-    getProductFromApi(url, category, page);
+    getProductFromApi(url, category, page, orderby, order);
 }
