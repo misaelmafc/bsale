@@ -40,7 +40,7 @@
             </nav>
 
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-                <div id="main" class="row" style="padding: 2rem 10rem 2rem 10rem;">
+                <div id="main" class="row" style="padding: 2rem 0rem 2rem 0rem;">
                 </div>
             </main>
         </div>
