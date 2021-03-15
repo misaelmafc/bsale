@@ -1,3 +1,4 @@
+// Función que agrega imagen central al cargar la página
 $(document).ready(function () {
     $('#main').html(`
         <div class="row justify-content-center divMessageInitial">
@@ -11,33 +12,10 @@ $(document).ready(function () {
     `);
 });
 
+// Controlador de eventos que permite cargar el menú lateral de forma asíncrona al cargar la página
 window.addEventListener("load", loadNav);
 
-$('#search').keyup(function () {
-    $('.linkActive').removeClass('linkActive');
-    let wordBySearch = $(this).val();
-    if (wordBySearch != '') {
-        getProductFromSearch(wordBySearch);
-    } else {
-        $('#main').html(`
-            <div class="row justify-content-center divMessageInitial">
-                <div class="col-lg-7">
-                    <h3 class="titleInitial">Puedes buscar nuestros productos por catergoría o en el buscador</h3>
-                </div>
-                <div class="col-12 col-md-10">
-                    <img class="imgMessage" src="https://astroparsec.cl/imgHeroku/search-data.svg" alt="">
-                </div>
-            </div>
-         `);
-    }
-
-});
-
-function getProductFromSearch(search, page = 1, orderby = 2, order = 1) {
-    let url = `./API/index.php?search=${search}&orderby=${orderby}&order=${order}&page=${page}`;
-    getProductFromApi(2, url, search, page, orderby, order);
-}
-
+// Función que carga el menú lateral
 function loadNav() {
     $.ajax({
         type: 'GET',
@@ -65,12 +43,40 @@ function loadNav() {
     });
 }
 
+// Controlador de eventos que permite realizar la busqueda de productos de forma asíncrona
+$('#search').keyup(function () {
+    $('.linkActive').removeClass('linkActive');
+    let wordBySearch = $(this).val();
+    if (wordBySearch != '') {
+        getProductFromSearch(wordBySearch);
+    } else {
+        $('#main').html(`
+            <div class="row justify-content-center divMessageInitial">
+                <div class="col-lg-7">
+                    <h3 class="titleInitial">Puedes buscar nuestros productos por catergoría o en el buscador</h3>
+                </div>
+                <div class="col-12 col-md-10">
+                    <img class="imgMessage" src="https://astroparsec.cl/imgHeroku/search-data.svg" alt="">
+                </div>
+            </div>
+         `);
+    }
+
+});
+
+// Función que permite armar la URL a utilizar al consultar los productos desde el buscador
+function getProductFromSearch(search, page = 1, orderby = 2, order = 1) {
+    let url = `./API/index.php?search=${search}&orderby=${orderby}&order=${order}&page=${page}`;
+    getProductFromApi(2, url, search, page, orderby, order);
+}
+// Función que permite armar la URL a utilizar al seleccionar alguna categoría
 function getProductFromCategory(category, page = 1, orderby = 2, order = 1) {
     let url = `./API/index.php?category=${category}&orderby=${orderby}&order=${order}&page=${page}`;
     $('#search').val('');
     getProductFromApi(1, url, category, page, orderby, order);
 }
 
+// Función que realiza la consulta a la API según la selección de una categoría o desde el buscador
 function getProductFromApi(switcher, url, category, page, orderbyGlobal, orderGlobal) {
     $.ajax({
         type: 'GET',
